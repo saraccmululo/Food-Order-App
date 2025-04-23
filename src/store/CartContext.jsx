@@ -3,7 +3,8 @@ import { createContext, useReducer } from "react";
   const CartContext= createContext({
     items: [],
     addItem: (item) => {},
-    removeItem: (id) => {}
+    removeItem: (id) => {},
+    clearCart: () => {}
   });
   
   function cartReducer(state, action) {
@@ -40,6 +41,11 @@ import { createContext, useReducer } from "react";
         }
       return {...state, items: updatedItems};
     }
+
+    if (action.type === 'CLEAR_CART') {
+      return { ...state, items: []};
+    }
+
     return state;
   }
 
@@ -47,16 +53,20 @@ import { createContext, useReducer } from "react";
     const [ cart, dispatchCartAction ] = useReducer(cartReducer, {items: []});
 
     const addItem = (item) => {
-      dispatchCartAction({type: 'ADD_ITEM', item})
+      dispatchCartAction({ type: 'ADD_ITEM', item });
     }
     const removeItem = (id) => {
-      dispatchCartAction({type: 'REMOVE_ITEM', id})
+      dispatchCartAction({ type: 'REMOVE_ITEM', id });
+    }
+    const clearCart = () => {
+      dispatchCartAction({ type: 'CLEAR_CART'});
     }
 
     const cartContext = {
       items: cart.items,
       addItem,
-      removeItem
+      removeItem,
+      clearCart
     };
 
     console.log(cartContext)
