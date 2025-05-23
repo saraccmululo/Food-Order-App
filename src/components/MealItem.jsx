@@ -3,6 +3,10 @@ import { currencyFormatter } from "../util/formatting";
 import Button from "./UI/Button";
 import CartContext from "../store/CartContext";
 
+const BASE_URL = import.meta.env.MODE === 'development'
+  ? 'http://localhost:3000'
+  : 'https://food-order-app-madm.onrender.com';
+
 const MealItem = ({meal}) => {
   const cartCtx = useContext(CartContext);
   
@@ -13,7 +17,7 @@ const MealItem = ({meal}) => {
   return (
     <li className='meal-item'> 
      <article>
-       <img src={`http://localhost:3000/${meal.image}`} alt={meal.name} />
+       <img src={`${BASE_URL}/${meal.image}`} alt={meal.name} />
        <div>
          <h3>{meal.name}</h3>
          <p className="meal-item-price">{currencyFormatter.format(meal.price)}</p>
